@@ -47,7 +47,7 @@ const NavBar = () =>
                 </li>
                 <li>
                     <NavLink 
-                    to='/furnitures'
+                    to='/furniture'
                     className={({ isActive }) => 
                     isActive ?  activeStyle : undefined 
                 }>
@@ -56,11 +56,11 @@ const NavBar = () =>
                 </li>
                 <li>
                     <NavLink 
-                    to='/toys'
+                    to='/shoes'
                     className={({ isActive }) => 
                      isActive ?  activeStyle : undefined 
                  }>
-                        Toys
+                        Shoes
                     </NavLink>
                 </li>
                 <li>
