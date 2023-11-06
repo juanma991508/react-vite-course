@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
 export const ShoppingCartContext = createContext();
 
@@ -32,6 +32,32 @@ export const ShoppingCartProvider = ({children}) =>
     //Shopping Cart . Order
     const [order, setOrder] = useState([]);
 
+    //Get Products
+    const [items, setItems] = useState(null);
+    const [filteredItems, setFilteredItems] = useState(null);
+
+    //Get search by title
+    const [searchByTitle, setSearchByTitle] = useState(null);
+
+    
+
+    useEffect(() => {
+        fetch('https://api.escuelajs.co/api/v1/products')
+        .then (response => response.json())
+        .then(data => setItems(data))
+       }, [])
+
+    const filtereditemsByTitle = (items, searchByTitle) =>
+    {
+        return items?.filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()));
+    } 
+
+
+    useEffect(() => {
+        if(searchByTitle)  setFilteredItems(filtereditemsByTitle(items, searchByTitle));
+       
+       }, [items, searchByTitle])
+
     return (
         <ShoppingCartContext.Provider value={{
             count,
@@ -47,7 +73,12 @@ export const ShoppingCartProvider = ({children}) =>
             openCheckout,
             closeCheckout,
             order,
-            setOrder
+            setOrder,
+            items,
+            setItems, 
+            filteredItems,
+            searchByTitle,
+            setSearchByTitle
         }}>
             {children}
         </ShoppingCartContext.Provider>
